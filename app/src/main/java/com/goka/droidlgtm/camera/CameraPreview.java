@@ -2,6 +2,7 @@ package com.goka.droidlgtm.camera;
 
 import com.goka.droidlgtm.Config;
 import com.goka.droidlgtm.Logger;
+import com.goka.droidlgtm.Util;
 
 import java.io.IOException;
 import java.util.List;
@@ -343,25 +344,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 cameraParams.set(CAMERA_PARAM_ORIENTATION, CAMERA_PARAM_LANDSCAPE);
             }
         } else { // for 2.2 and later
-            int angle;
-            Display display = mActivity.getWindowManager().getDefaultDisplay();
-            switch (display.getRotation()) {
-                case Surface.ROTATION_0: // This is display orientation
-                    angle = 90; // This is camera orientation
-                    break;
-                case Surface.ROTATION_90:
-                    angle = 0;
-                    break;
-                case Surface.ROTATION_180:
-                    angle = 270;
-                    break;
-                case Surface.ROTATION_270:
-                    angle = 180;
-                    break;
-                default:
-                    angle = 90;
-                    break;
-            }
+            int angle = Util.getDisplayRotation(mActivity);
             Log.v(LOG_TAG, "angle: " + angle);
             mCamera.setDisplayOrientation(angle);
         }
